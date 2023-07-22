@@ -1,0 +1,70 @@
+<div class="card">
+    <ng-container *ngIf="response">
+        <div class="card-body">
+            <p>{{response.info.seed}} </p>
+            <p>Resultados Obtenidos: {{ response.info.results }} </p>
+            <p>{{ response.info.version }} </p>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="!response">
+        food no renderizado
+    </ng-container>
+</div>
+
+
+
+<table *ngIf="response" id="tabla" class="mat-elevation-z8" style="width: 100%">
+    <tr>
+        <ng-container matColumnDef="ID">
+            <th id="filaT" scope="col">ID</th>
+        </ng-container>
+
+        <ng-container matColumnDef="Foto">
+            <th id="filaT" scope="col">Foto</th>
+        </ng-container>
+
+        <ng-container matColumnDef="Nombre">
+            <th id="filaT" scope="col">Nombre</th>
+        </ng-container>
+
+        <ng-container matColumnDef="Email">
+            <th id="filaT" scope="col">Email</th>
+        </ng-container>
+
+        <ng-container matColumnDef="Direccion">
+            <th id="filaT" scope="col">Direccion</th>
+        </ng-container>
+
+        <ng-container matColumnDef="Telefono">
+            <th id="filaT" scope="col">Telefono</th>
+        </ng-container>
+
+        <ng-container matColumnDef="Mas">
+            <th id="filaT" scope="col">Mas...</th>
+        </ng-container>
+
+    </tr>
+    <tbody>
+        <tr *ngFor="let user of response?.results; let i=index">
+
+            <td id="fila">{{user.uuid}}</td>
+            <td id="fila"><img [src]="user.imageUrl" alt="user.firstName"></td>
+            <td id="fila">{{user.firstName}} {{ user.lastName}}</td>
+            <td id="fila">{{user.email}}</td>
+            <td id="fila">{{user.address}}</td>
+            <td id="fila">{{user.phone}}</td>
+            <td id="fila">
+                <button [routerLink]="['/user',user.uuid]" mat-fab extended color="warm">Ver mas</button>
+            </td>
+        </tr>
+    </tbody>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    
+</table>
+<mat-paginator 
+[length]="totalItems"
+[pageSize]="pageSize"
+[pageIndex]="pageIndex"
+(page)="onPageChange($event)">
+</mat-paginator>
